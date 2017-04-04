@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -21,6 +22,8 @@ import com.android.volley.toolbox.Volley;
 import com.gudangapp.analytics.R;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -31,12 +34,12 @@ public class LockScreenActivity extends AppCompatActivity {
 
     private final String url = "http://dashboard.appxoffer.com/iklan";
     RequestQueue queue;
-    String images[] = {
-            "http://www.supermetroemall.com/image/cache/data/Susu/Ultra_Milk_Cokel_510cb00d6153f-500x500.jpg",
-            "http://www.supermetroemall.com/image/cache/data/Susu/Ultra_Milk_full__510cb079dd072-500x500.jpg",
-            "https://s3-ap-southeast-1.amazonaws.com/mbiz-images/catalog/ultra-uht-milk-strawberry-250-ml.jpg"
-    };
+    String images[];
+    String titles[];
+    String descriptions[];
     private ImageView imageView;
+    TextView title;
+    TextView descrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,9 @@ public class LockScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main_lock);
         UnlockBar unlock = (UnlockBar) findViewById(R.id.unlock);
+        title = (TextView) findViewById(R.id.textTitle);
+        descrip = (TextView) findViewById(R.id.description);
+
         queue = Volley.newRequestQueue(this);
 
         loadData();
@@ -74,7 +80,11 @@ public class LockScreenActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        loadImage(response);
+                        try {
+                            loadImage(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("Response", response);
                     }
                 },
@@ -126,7 +136,25 @@ public class LockScreenActivity extends AppCompatActivity {
         };
     }
 
-    void loadImage(String response) {
+    void loadImage(String response) throws JSONException {
+
+        JSONObject json = new JSONObject(response);
+        JSONObject data = json.getJSONObject("iklans");
+        JSONArray iklans = data.getJSONArray("data");
+
+        images = new String[iklans.length()];
+        titles = new String[iklans.length()];
+        descriptions = new String[iklans.length()];
+
+        for (int i = 0; i < iklans.length(); i++) {
+            JSONObject iklan = iklans.getJSONObject(i);
+            String picture = iklan.getString("picture");
+            String name = iklan.getString("name");
+            String description = iklan.getString("description");
+            images[i] = picture;
+            titles[i] = name;
+            descriptions[i] = description;
+        }
 
         imageView = (ImageView) findViewById(R.id.imageViewIklan);
 
@@ -145,6 +173,8 @@ public class LockScreenActivity extends AppCompatActivity {
                 if (i > images.length - 1) {
                     i = 0;
                     Log.d("pict", images[i]);
+                    title.setText(titles[i]);
+                    descrip.setText(descriptions[i]);
                 }
                 handler.postDelayed(this, 2000);
             }
