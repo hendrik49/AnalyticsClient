@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.appxoffer.analitycs.AnalyticLib;
 import com.appxoffer.analitycs.AnalyticsException;
 
+import iklan.utils.LockScreen;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         setContentView(R.layout.activity_main);
+        LockScreen.getInstance().init(this,true);
+        LockScreen.getInstance().active();
+
         try {
             AnalyticLib.onStart(this);
         }catch (AnalyticsException e){
