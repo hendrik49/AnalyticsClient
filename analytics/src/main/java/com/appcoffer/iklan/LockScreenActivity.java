@@ -18,8 +18,8 @@ public class LockScreenActivity extends AppCompatActivity {
 
     private ImageView imageView;
     String images[] = {
-            "http://localhost:8000/upload/images/susu2.jpg",
-            "http://localhost:8000/upload/images/susu.jpeg"
+            "http://www.supermetroemall.com/image/cache/data/Susu/Ultra_Milk_Cokel_510cb00d6153f-500x500.jpg",
+            "http://www.supermetroemall.com/image/cache/data/Susu/Ultra_Milk_full__510cb079dd072-500x500.jpg"
     };
 
     @Override
