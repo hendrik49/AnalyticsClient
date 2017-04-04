@@ -25,11 +25,9 @@ public class LockscreenService extends Service {
     private final String TAG = "LockscreenService";
     private int mServiceStartId = 0;
     private Context mContext = null;
+    public static String apikey;
 
     private NotificationManager mNM;
-
-
-
 
 
     private BroadcastReceiver mLockscreenReceiver = new BroadcastReceiver() {
@@ -55,6 +53,9 @@ public class LockscreenService extends Service {
         }
     }
 
+    public static void setKey(String apiKey){
+        apikey=apiKey;
+    }
 
     @Override
     public void onCreate() {
@@ -97,6 +98,7 @@ public class LockscreenService extends Service {
     private void startLockscreenActivity() {
         Intent startLockscreenActIntent = new Intent(mContext, LockScreenActivity.class);
         startLockscreenActIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startLockscreenActIntent.putExtra("apikey", apikey);
         startActivity(startLockscreenActIntent);
     }
 

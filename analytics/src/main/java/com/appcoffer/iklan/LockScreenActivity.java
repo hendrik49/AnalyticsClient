@@ -48,6 +48,7 @@ public class LockScreenActivity extends AppCompatActivity {
     TextView descrip;
     String currentUrl;
     String id;
+    String apikey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,11 @@ public class LockScreenActivity extends AppCompatActivity {
         descrip = (TextView) findViewById(R.id.description);
 
         queue = Volley.newRequestQueue(this);
+        if (getIntent().hasExtra("apikey")) {
+            apikey = getIntent().getStringExtra("apikey");
+        } else {
+            Log.d("apikey", apikey);
+        }
 
         loadData();
 
@@ -107,7 +113,7 @@ public class LockScreenActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Api-Key", "264d277baad16c73231065bcdd020c02");
+                params.put("Api-Key", apikey);
                 params.put("Sig", "1");
                 return params;
             }
@@ -142,7 +148,7 @@ public class LockScreenActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("Api-key", "264d277baad16c73231065bcdd020c02");
+                params.put("Api-key", apikey);
                 params.put("Sig", "1");
                 return params;
             }
@@ -176,7 +182,7 @@ public class LockScreenActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("Api-key", "264d277baad16c73231065bcdd020c02");
+                params.put("Api-key", apikey);
                 params.put("Sig", "1");
                 return params;
             }

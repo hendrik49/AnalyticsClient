@@ -26,11 +26,13 @@ public class LockScreen {
         }
         return singleton;
     }
+
     public void init(Context context){
         this.context = context;
 
 
     }
+
 
     public void init(Context context, boolean disableHomeButton){
         this.context = context;
