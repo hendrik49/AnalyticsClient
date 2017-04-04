@@ -1,5 +1,7 @@
 package com.appcoffer.iklan;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -36,10 +38,12 @@ public class LockScreenActivity extends AppCompatActivity {
     RequestQueue queue;
     String images[];
     String titles[];
+    String urls[];
     String descriptions[];
     private ImageView imageView;
     TextView title;
     TextView descrip;
+    String currentUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +140,13 @@ public class LockScreenActivity extends AppCompatActivity {
         };
     }
 
+    public void viewPic(View view) {
+        String url = currentUrl;
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+    }
+
     void loadImage(String response) throws JSONException {
 
         JSONObject json = new JSONObject(response);
@@ -144,6 +155,7 @@ public class LockScreenActivity extends AppCompatActivity {
 
         images = new String[iklans.length()];
         titles = new String[iklans.length()];
+        urls = new String[iklans.length()];
         descriptions = new String[iklans.length()];
 
         for (int i = 0; i < iklans.length(); i++) {
@@ -151,8 +163,10 @@ public class LockScreenActivity extends AppCompatActivity {
             String picture = iklan.getString("picture");
             String name = iklan.getString("name");
             String description = iklan.getString("description");
+            String url = iklan.getString("url");
             images[i] = picture;
             titles[i] = name;
+            urls[i] = url;
             descriptions[i] = description;
         }
 
@@ -173,6 +187,7 @@ public class LockScreenActivity extends AppCompatActivity {
                 if (i > images.length - 1) {
                     i = 0;
                     Log.d("pict", images[i]);
+                    currentUrl = urls[i];
                     title.setText(titles[i]);
                     descrip.setText(descriptions[i]);
                 }

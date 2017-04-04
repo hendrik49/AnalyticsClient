@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/iklan"
         android:adjustViewBounds="true"
+        android:onClick="viewPic"
         android:layout_below="@+id/textTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
