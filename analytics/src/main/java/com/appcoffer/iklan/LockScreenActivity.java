@@ -35,6 +35,8 @@ import java.util.Map;
 public class LockScreenActivity extends AppCompatActivity {
 
     private final String url = "http://dashboard.appxoffer.com/iklan";
+    private final String url_post_ret = "http://dashboard.appxoffer.com/postiklan";
+    private final String url_post_open = "http://dashboard.appxoffer.com/postopen";
     RequestQueue queue;
     String images[];
     String titles[];
@@ -116,7 +118,7 @@ public class LockScreenActivity extends AppCompatActivity {
 
     public void saveRetention() {
 
-        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url_post_ret,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -133,18 +135,51 @@ public class LockScreenActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Api-Key", "264d277baad16c73231065bcdd020c02");
+                params.put("Api-key", "264d277baad16c73231065bcdd020c02");
                 params.put("Sig", "1");
                 params.put("id", id);
                 return params;
             }
         };
+        queue.add(postRequest);
+
     }
+
+    public void saveOpen() {
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url_post_open,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Api-key", "264d277baad16c73231065bcdd020c02");
+                params.put("Sig", "1");
+                params.put("id", id);
+                return params;
+            }
+        };
+        queue.add(postRequest);
+
+    }
+
 
     public void viewPic(View view) {
         String url = currentUrl;
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
+        saveOpen();
         startActivity(i);
     }
 
@@ -174,6 +209,7 @@ public class LockScreenActivity extends AppCompatActivity {
             descriptions[i] = description;
         }
 
+        saveRetention();
         imageView = (ImageView) findViewById(R.id.imageViewIklan);
 
         final Handler handler = new Handler();
@@ -190,7 +226,6 @@ public class LockScreenActivity extends AppCompatActivity {
                 i++;
                 if (i > images.length - 1) {
                     i = 0;
-                    Log.d("pict", images[i]);
                     currentUrl = urls[i];
                     id = ids[i];
                     title.setText(titles[i]);
