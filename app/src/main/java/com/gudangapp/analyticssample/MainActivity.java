@@ -16,14 +16,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         try {
-            LockScreen.getInstance().init(this,true);
+            LockScreen.getInstance().init(this);
             LockScreen.getInstance().active();
             AnalyticLib.init(this, "264d277baad16c73231065bcdd020c03");
         }catch (AnalyticsException e){
             e.printStackTrace();
         }
-        setContentView(R.layout.activity_main_lock);
-
+        setContentView(R.layout.activity_main);
+        finish();
         try {
             AnalyticLib.onStart(this);
         }catch (AnalyticsException e){
