@@ -2,10 +2,11 @@ package com.gudangapp.analyticssample;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.appcoffer.iklan.iklan.LockScreen;
 import com.appxoffer.analitycs.AnalyticLib;
 import com.appxoffer.analitycs.AnalyticsException;
 
-import iklan.utils.LockScreen;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,14 +14,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         try {
+            LockScreen.getInstance().init(this,true);
+            LockScreen.getInstance().active();
             AnalyticLib.init(this, "264d277baad16c73231065bcdd020c03");
         }catch (AnalyticsException e){
             e.printStackTrace();
         }
-        setContentView(R.layout.activity_main);
-        LockScreen.getInstance().init(this,true);
-        LockScreen.getInstance().active();
+        setContentView(R.layout.activity_main_lock);
 
         try {
             AnalyticLib.onStart(this);

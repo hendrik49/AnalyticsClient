@@ -24,9 +24,6 @@
         android:contentDescription="@string/unlock_unlocked"
         android:adjustViewBounds="true" />
 
-
-
-
     <TextView
         android:id="@+id/text_label"
         android:layout_height="wrap_content"

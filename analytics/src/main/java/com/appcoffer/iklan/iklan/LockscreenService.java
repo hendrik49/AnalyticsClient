@@ -1,9 +1,10 @@
-package iklan.utils;
+package com.appcoffer.iklan.iklan;
 
 /**
  * Created by andika on 2/15/17.
  */
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,14 +15,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import com.appcoffer.iklan.LockApplication;
+import com.appcoffer.iklan.LockScreenActivity;
 import com.gudangapp.analytics.R;
-
-import iklan.LockApplication;
-import iklan.LockScreenActivity;
-
 
 public class LockscreenService extends Service {
     private final String TAG = "LockscreenService";
@@ -58,7 +56,6 @@ public class LockscreenService extends Service {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onCreate() {
         super.onCreate();
@@ -74,7 +71,6 @@ public class LockscreenService extends Service {
         stateRecever(true);
         Intent bundleIntet = intent;
         if (null != bundleIntet) {
-           // startLockscreenActivity();
             Log.d(TAG, TAG + " onStartCommand intent  existed");
         } else {
             Log.d(TAG, TAG + " onStartCommand intent NOT existed");
@@ -107,7 +103,6 @@ public class LockscreenService extends Service {
     /**
      * Show a notification while this service is running.
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void showNotification() {
         CharSequence text = "Running";
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
@@ -123,7 +118,7 @@ public class LockscreenService extends Service {
                 .setOngoing(true)
                 .build();
 
-        mNM.notify(((LockApplication) getApplication()).notificationId, notification);
+        mNM.notify(((LockApplication) getApplicationContext()).notificationId, notification);
     }
 
 }

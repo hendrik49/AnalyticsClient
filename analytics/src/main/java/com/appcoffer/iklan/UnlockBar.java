@@ -1,10 +1,10 @@
-package iklan;
+package com.appcoffer.iklan;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gudangapp.analytics.R;
+
 
 public class UnlockBar extends RelativeLayout
 {
@@ -79,13 +80,11 @@ public class UnlockBar extends RelativeLayout
 	private void init(Context context, AttributeSet attrs)
 	{		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.unlock_main, this, true);
+		inflater.inflate(R.layout.unlock_main_lock, this, true);
 
 		// Retrieve layout elements
 		text_label = (TextView) findViewById(R.id.text_label);
 		img_thumb = (ImageView) findViewById(R.id.img_thumb);
-
-
 
 		// Get padding
 		//thumbWidth = dpToPx(120); // 60dp + 2*10dp
@@ -93,7 +92,7 @@ public class UnlockBar extends RelativeLayout
 		ViewTreeObserver viewTreeObserver = this.getViewTreeObserver();
 		if (viewTreeObserver.isAlive()) {
 			viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-				@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+				@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 				@Override
 				public void onGlobalLayout() {
 					UnlockBar.this.getViewTreeObserver().removeOnGlobalLayoutListener(this);

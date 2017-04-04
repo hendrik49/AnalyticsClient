@@ -1,11 +1,11 @@
-package iklan.utils;
+package com.appcoffer.iklan.iklan;
 
 import android.accessibilityservice.AccessibilityService;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 
-import iklan.LockApplication;
-
+import com.appcoffer.iklan.LockApplication;
 
 /**
  * Created by andika on 2/25/17.
@@ -18,7 +18,6 @@ public class LockWindowAccessibilityService extends AccessibilityService {
 
         LockScreen.getInstance().init(this);
         if(  ((LockApplication) getApplication()).lockScreenShow ){
-            // disable home
             if(event.getKeyCode()==KeyEvent.KEYCODE_HOME || event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER){
                 return true;
             }
@@ -29,7 +28,7 @@ public class LockWindowAccessibilityService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
-        //Log.d("onAccessibilityEvent","onAccessibilityEvent");
+        Log.d("onAccessibilityEvent","onAccessibilityEvent");
     }
 
     @Override

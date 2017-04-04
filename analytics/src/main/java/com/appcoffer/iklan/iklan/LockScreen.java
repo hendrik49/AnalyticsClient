@@ -1,4 +1,4 @@
-package iklan.utils;
+package com.appcoffer.iklan.iklan;
 
 import android.app.ActivityManager;
 import android.content.Context;

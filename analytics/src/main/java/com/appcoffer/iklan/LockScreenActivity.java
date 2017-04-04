@@ -1,4 +1,4 @@
-package iklan;
+package com.appcoffer.iklan;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,11 +26,10 @@ public class LockScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_lock);
         UnlockBar unlock = (UnlockBar) findViewById(R.id.unlock);
 
         loadImage();
-        // Attach listener
         unlock.setOnUnlockListenerRight(new UnlockBar.OnUnlockListener() {
             @Override
             public void onUnlock() {
@@ -105,7 +104,7 @@ public class LockScreenActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
     }
 
     @Override
