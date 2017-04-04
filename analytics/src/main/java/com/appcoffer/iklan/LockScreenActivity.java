@@ -111,33 +111,39 @@ public class LockScreenActivity extends AppCompatActivity {
                 params.put("Sig", "1");
                 return params;
             }
+
         };
         queue.add(postRequest);
 
     }
 
-    public void saveRetention() {
+    public void saveRetention(final String idiklan) {
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url_post_ret,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Response", response);
+                        Log.d("Response Retention", response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
+                        Log.d("Response Retention", error.getMessage());
                     }
                 }
         ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("id", idiklan);
+                return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
                 params.put("Api-key", "264d277baad16c73231065bcdd020c02");
                 params.put("Sig", "1");
-                params.put("id", id);
                 return params;
             }
         };
@@ -151,24 +157,30 @@ public class LockScreenActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Response", response);
+                        Log.d("Response Open", response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
+                        Log.d("Error.Response Open", error.getMessage());
                     }
                 }
         ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Api-key", "264d277baad16c73231065bcdd020c02");
-                params.put("Sig", "1");
                 params.put("id", id);
                 return params;
             }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Api-key", "264d277baad16c73231065bcdd020c02");
+                params.put("Sig", "1");
+                return params;
+            }
+
         };
         queue.add(postRequest);
 
@@ -206,10 +218,10 @@ public class LockScreenActivity extends AppCompatActivity {
             titles[i] = name;
             urls[i] = url;
             ids[i] = id;
+            saveRetention(id);
             descriptions[i] = description;
         }
 
-        saveRetention();
         imageView = (ImageView) findViewById(R.id.imageViewIklan);
 
         final Handler handler = new Handler();
@@ -225,12 +237,12 @@ public class LockScreenActivity extends AppCompatActivity {
                         .into(imageView);
                 i++;
                 if (i > images.length - 1) {
-                    i = 0;
-                    currentUrl = urls[i];
-                    id = ids[i];
-                    title.setText(titles[i]);
-                    descrip.setText(descriptions[i]);
+                    i=0;
                 }
+                currentUrl = urls[i];
+                id = ids[i];
+                title.setText(titles[i]);
+                descrip.setText(descriptions[i]);
                 handler.postDelayed(this, 2000);
             }
         };
