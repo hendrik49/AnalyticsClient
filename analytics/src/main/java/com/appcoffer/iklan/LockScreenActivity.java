@@ -39,11 +39,13 @@ public class LockScreenActivity extends AppCompatActivity {
     String images[];
     String titles[];
     String urls[];
+    String ids[];
     String descriptions[];
     private ImageView imageView;
     TextView title;
     TextView descrip;
     String currentUrl;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,13 +114,12 @@ public class LockScreenActivity extends AppCompatActivity {
 
     }
 
-    public void saveRetention(final String ret) {
+    public void saveRetention() {
 
         StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // response
                         Log.d("Response", response);
                     }
                 },
@@ -132,9 +133,9 @@ public class LockScreenActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("open", ret);
-                params.put("retention", ret);
-                params.put("domain", "http://itsalif.info");
+                params.put("Api-Key", "264d277baad16c73231065bcdd020c02");
+                params.put("Sig", "1");
+                params.put("id", id);
                 return params;
             }
         };
@@ -155,6 +156,7 @@ public class LockScreenActivity extends AppCompatActivity {
 
         images = new String[iklans.length()];
         titles = new String[iklans.length()];
+        ids = new String[iklans.length()];
         urls = new String[iklans.length()];
         descriptions = new String[iklans.length()];
 
@@ -164,9 +166,11 @@ public class LockScreenActivity extends AppCompatActivity {
             String name = iklan.getString("name");
             String description = iklan.getString("description");
             String url = iklan.getString("url");
+            String id = iklan.getString("id");
             images[i] = picture;
             titles[i] = name;
             urls[i] = url;
+            ids[i] = id;
             descriptions[i] = description;
         }
 
@@ -188,6 +192,7 @@ public class LockScreenActivity extends AppCompatActivity {
                     i = 0;
                     Log.d("pict", images[i]);
                     currentUrl = urls[i];
+                    id = ids[i];
                     title.setText(titles[i]);
                     descrip.setText(descriptions[i]);
                 }
