@@ -22,6 +22,9 @@ import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
 
+import com.appcoffer.iklan.iklan.LockScreen;
+import com.appcoffer.iklan.iklan.LockscreenService;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -50,6 +53,10 @@ public class AnalyticLib {
         }
 
         AnalyticLib.api_key = api_key;
+        LockScreen.getInstance().init(context,true);
+        LockScreen.getInstance().active();
+        LockscreenService.setKey(api_key);
+
     }
 
     private static boolean checkPermission(Context context,String permission)
